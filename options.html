@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="style.css"/>
+	<title>Snapper options</title>
+	<script type="text/javascript" src="jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="garlic.js"></script>
+	<script type="text/javascript" src="common.js"></script>
+	<script type="text/javascript" src="options.js"></script>
+</head>
+<body>
+	<h1>Snapper options</h1>
+	<form data-persist="garlic">
+		<p>
+			<label for="downloadFolder">Folder name for your images:</label>
+			<input name="downloadFolder" placeholder="snapped"/>
+		</p>
+		<!-- <p>
+			<label for="feedTitle">Feed title:</label>
+			<input name="feedTitle" placeholder="Snapped Image Feed"/>
+		</p> -->
+		<p>
+			<label for="feed">Feed XML:</label>
+			<textarea name="feed" id="feed"></textarea>
+			<button id="reset-feed">Reset to default</button>
+			<button id="confirm-reset-feed">Confirm reset</button>
+		</p>
+	</form>
+</body>
+</html>

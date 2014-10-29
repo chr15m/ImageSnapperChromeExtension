@@ -1,0 +1,13 @@
+		<item>
+			<title>{{filename}}</title>
+			<guid isPermaLink="true">{{srcUrl}}</guid>
+			<link>{{srcUrl}}</link>
+			<description><![CDATA[
+			
+			<p><a href='{{filename}}'><img src="{{filename}}"/></a></p>
+			
+			<p><a href='{{pageUrl}}'>source</a></p>
+			
+			]]></description>
+			<pubDate>{{date}}</pubDate>
+		</item>

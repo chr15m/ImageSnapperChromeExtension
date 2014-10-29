@@ -1,0 +1,15 @@
+{
+	"name": "Snapper",
+	"description": "Download images and make an XML file.",
+	"version": "0.0.1",
+	"permissions": [
+		"contextMenus",
+		"downloads"
+	],
+	"background": {
+		"persistent": false,
+		"scripts": ["jquery-1.11.1.min.js", "common.js", "background.js"]
+	},
+	"manifest_version": 2,
+	"options_page": "options.html"
+}

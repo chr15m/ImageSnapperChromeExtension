@@ -1,0 +1,11 @@
+#!/bin/bash
+
+dir=`pwd`
+name=`basename $dir`
+
+echo $dir
+echo $name
+pushd ..
+	find $name/* | grep -v .git | xargs zip -r $name.zip
+	mv $name.zip $name
+popd

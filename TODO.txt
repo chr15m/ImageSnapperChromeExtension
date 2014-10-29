@@ -1,0 +1,3 @@
+ * icon
+ * pubDate of feed
+ * index.html
