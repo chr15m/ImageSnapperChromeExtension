@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="alternate" type="application/rss+xml" title="Image Snapper RSS Feed" href="feed.xml" />
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+	<style>
+		html {
+			margin: 0px;
+			padding: 0px;
+		}
+		
+		body {
+			padding: 0px;
+			padding-bottom: 150px;
+			font-family: Arial;
+			font-size: 0.75em;
+			text-align: center;
+			background: #333333;
+			margin: 0px;
+		}
+
+		img {
+			max-width: 100%;
+			max-height: 100%;
+		}
+		
+		a {
+			text-decoration: none;
+			color: #888888;
+		}
+		
+		a:hover {
+			color: #888855;
+		}
+		
+		span.scrolltop {
+			font-size: 2em;
+			margin-bottom: -4em;
+			visibility: hidden;
+			cursor: n-resize;
+			float: right;
+		}
+		
+		i.loader {
+			color: #ddd;
+		}
+		
+		i.fa-stack-1x {
+			color: #333333;
+		}
+		
+		i.fa-stack-2x {
+			color: rgba(255, 255, 255, 0.9);
+		}
+	</style>
+	<title>Snapped Images</title>
+	<script src='https://code.jquery.com/jquery-1.11.1.min.js'></script>
+	<script>
+	$(function() {
+		// document we'll store the rss feed in
+		var feedxml = null;
+		
+		// check the scroll position and load another block if it's near the bottom
+		function checkScrollPosition() {
+			if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+				showOneMore();
+			}
+		}
+		
+		// display the next unrendered item
+		window.showOneMore = function showOneMore() {
+			// find the next item in the feed that has not yet been rendered
+			var item = feedxml.find("item:not([rendered=true]):first");
+			// if we found another one
+			if (item) {
+				// mark it as rendered in the feed
+				$(item).attr("rendered", "true");
+				// add the content of the element
+				var el = $("<div class='item'><span class='fa-stack scrolltop'><i class='fa fa-square fa-stack-2x'></i><i class='fa fa-arrow-up fa-stack-1x'></i></span>" + $(item).find("description").text() + "<i class='fa fa-circle-o-notch fa-spin loader'></i></div>");
+				// when the image has loaded
+				el.find("img").load(function() {
+					// remove the spinner
+					el.find("i.fa-spin").remove();
+				});
+				// hovering over the item shows the scroll-to-top interface
+				el.hover(function(ev) {
+					$(this).closest(".item").find("span.scrolltop").css("visibility", "visible");
+				}, function(ev) {
+					$(this).closest(".item").find("span.scrolltop").css("visibility", "hidden");
+				});
+				// if scroll-to-top interface is mouse-overed then scroll to show the image
+				el.find(".scrolltop").on("click mouseover", function() {
+					$('html,body').animate({
+						scrollTop: $(this).parent().find("img").offset().top
+					}, 200);
+				});
+				// add the element to our document
+				$("body").append(el);
+			}
+		}
+		
+		// load the feed
+		$.get("feed.xml", function(feed) {
+			feedxml = $(feed);
+			checkScrollPosition();
+		}, "xml");
+		
+		// when the user scrolls to the bottom of the page load the next page of images
+		$(window).scroll(checkScrollPosition);
+	});
+	</script>
+</head>
+<body>
+	<p><a href='feed.xml'>Image Snapper RSS Feed</a></p>
+</body>
+</html>
