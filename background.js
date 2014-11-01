@@ -12,7 +12,7 @@ chrome.runtime.onInstalled.addListener(function() {
 // load in the item template
 var template = null;
 $.get("item-template.xml", function(t) {
-	template = t.replace("\t", "") + "\t";
+	template = "\n" + t + "\n";
 }, "text");
 
 // very simple templating function
@@ -70,9 +70,9 @@ var listenIds = {};
 });*/
 
 chrome.downloads.onChanged.addListener(function(delta) {
-	console.log(delta, listenIds);
 	// check if this is one of the Ids we are listening for
 	if (listenIds[delta.id]) {
+		console.log("changed", delta);
 		// if this delta contains a filename, update the real filename for our ID
 		if (delta["filename"]) {
 			listenIds[delta.id]["filename"] = delta.filename["current"].split("/").pop();
@@ -86,8 +86,15 @@ chrome.downloads.onChanged.addListener(function(delta) {
 				
 				getFeedXML(function(jxml) {
 					console.log("jxml", jxml);
+					// render the template with the download info
+					var rendered = templateReplace(template, listenIds[delta.id])
 					// add our new entry to the feed xml
-					$(jxml).find("channel").append(templateReplace(template, listenIds[delta.id]));
+					var items = $(jxml).find("item");
+					if (items.length == 0) {
+						$(jxml).find("channel").append(rendered);
+					} else {
+						$(items[0]).before(rendered);
+					}
 					
 					// get the string version of the xml document
 					var feedstring = (new XMLSerializer()).serializeToString(jxml);
@@ -118,11 +125,15 @@ chrome.downloads.onChanged.addListener(function(delta) {
 // add click event
 chrome.contextMenus.onClicked.addListener(
 	function onClickHandler(info, tab) {
+		console.log("clicked", info);
 		getFeedXML(function(jxml) {
+			// figure out the filename
+			var filename = getFolder() + "/" + (info.srcUrl.split("/").pop()).split(/[\?\#]/)[0];
+			console.log("xml", jxml);
 			// start the image download
 			chrome.downloads.download({
 				"url": info["srcUrl"],
-				"filename": getFolder() + "/" + info.srcUrl.split("/").pop()
+				"filename": filename
 			}, function(did) {
 				// arguments that will go into our item template
 				listenIds[did] = {
@@ -130,6 +141,7 @@ chrome.contextMenus.onClicked.addListener(
 					"pageUrl": info["pageUrl"],
 					"date": (new Date()).toGMTString()
 				};
+				console.log("download", listenIds[did]);
 			})
 		});
 	}
