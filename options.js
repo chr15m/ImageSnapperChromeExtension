@@ -3,7 +3,7 @@ $(function() {
 	var defaultfeed = null;
 	
 	// reject the enter key from the text boxes
-	$('form').bind('keypress', function(e){
+	$('#downloadFolder').bind('keypress', function(e){
 		if (e.keyCode == 13) {
 			e.preventDefault();
 		}
