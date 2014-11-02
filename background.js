@@ -119,6 +119,9 @@ chrome.downloads.onChanged.addListener(function(delta) {
 				delete listenIds[delta.id];
 			}
 		}
+	} else {
+		console.log("ignored:", delta);
+		return true;
 	}
 });
 
