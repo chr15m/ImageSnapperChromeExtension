@@ -83,7 +83,9 @@ chrome.downloads.onChanged.addListener(function(delta) {
 				getFeedXML(function(jxml) {
 					console.log("jxml", jxml);
 					// render the template with the download info
-					var rendered = templateReplace(template, listenIds[delta.id])
+					var rendered = templateReplace(template, listenIds[delta.id]);
+					// update the pubDate field to this latest download
+					$(jxml).find("pubDate").text(listenIds[delta.id]["date"]);
 					// add our new entry to the feed xml
 					var items = $(jxml).find("item");
 					if (items.length == 0) {
