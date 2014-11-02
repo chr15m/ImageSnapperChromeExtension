@@ -17,3 +17,6 @@ function setGarlic(name, value) {
 	}	
 }
 
+function getFolder() {
+	return getGarlic("downloadFolder").length ? getGarlic("downloadFolder")[1] : "snapped";
+}

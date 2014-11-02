@@ -46,10 +46,6 @@ function getFeedXML(callback) {
 	}
 }
 
-function getFolder() {
-	return getGarlic("downloadFolder").length ? getGarlic("downloadFolder")[1] : "snapped";
-}
-
 // download IDs this plugin is currently listening for -> config object
 var listenIds = {};
 
@@ -145,7 +141,7 @@ chrome.contextMenus.onClicked.addListener(
 					"date": (new Date()).toGMTString()
 				};
 				console.log("download", listenIds[did]);
-			})
+			});
 		});
 	}
 );
