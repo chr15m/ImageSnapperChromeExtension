@@ -1,3 +1,5 @@
+![Screenshot of the extension in action](./screenshot.png)
+
 Chrome Extension for the right-click menu - download an image and add it to an RSS feed.
 
  * Destination folder is configurable.
