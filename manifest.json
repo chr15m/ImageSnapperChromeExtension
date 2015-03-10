@@ -1,6 +1,7 @@
 {
 	"name": "ImageSnapper",
 	"description": "Download images and add them to an RSS feed.",
+        "short_name": "Image Snapper",
 	"version": "0.1.0",
 	"permissions": [
 		"contextMenus",

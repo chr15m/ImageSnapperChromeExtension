@@ -1,5 +1,7 @@
 ![Screenshot of the extension in action](./screenshot.png)
 
+[Click here to install from Chrome web store](https://chrome.google.com/webstore/detail/pmleogpeepphbpbebpldklnkejieooda/).
+
 Chrome Extension for the right-click menu - download an image and add it to an RSS feed.
 
  * Destination folder is configurable.
